@@ -83,12 +83,12 @@ h2{font-size:15px;margin:32px 0 10px;color:var(--muted);font-weight:700;letter-s
 
 /* quiz */
 .qnum{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.08em;margin:24px 0 8px}
-.qtext{font-size:17.5px;font-weight:700;line-height:1.65;margin:0 0 18px}
+.qtext{font-size:18.5px;font-weight:700;line-height:1.7;margin:0 0 18px}
 .choices{display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
 .ch{
   display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;
   background:var(--card);border:1.5px solid var(--line);border-radius:12px;
-  padding:13px 14px;font-size:15px;line-height:1.6;transition:.12s;
+  padding:14px 15px;font-size:16px;line-height:1.65;transition:.12s;
 }
 @media (hover:hover){ .ch:not(:disabled):hover{border-color:var(--accent)} }
 .ch .k{
@@ -115,10 +115,10 @@ h2{font-size:15px;margin:32px 0 10px;color:var(--muted);font-weight:700;letter-s
 .fb.toranii .who{color:var(--toranii)}
 .fb.saru .who{color:var(--saru)}
 .fb .who em{font-style:normal;font-weight:600;font-size:11px;color:var(--muted);letter-spacing:.04em}
-.fb p{margin:0;font-size:14.5px;line-height:1.7}
+.fb p{margin:0;font-size:15.5px;line-height:1.75}
 .fb .ref{
-  display:flex;align-items:flex-start;gap:7px;margin-top:9px;
-  font-size:13px;color:var(--accent);text-decoration:none;font-weight:600;
+  display:flex;align-items:flex-start;gap:7px;margin-top:11px;
+  font-size:14px;color:var(--accent);text-decoration:none;font-weight:600;
   line-height:1.55;
 }
 .fb .ref span:last-child{text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(194,65,12,.35)}
@@ -131,12 +131,12 @@ h2{font-size:15px;margin:32px 0 10px;color:var(--muted);font-weight:700;letter-s
 }
 .fb .ref .b.paid{background:var(--accent);color:#fff}
 .note{
-  font-size:13px;color:var(--muted);background:transparent;border:1px dashed var(--line);
+  font-size:14px;color:var(--muted);background:transparent;border:1px dashed var(--line);
   border-radius:10px;padding:10px 13px;margin-bottom:10px;
 }
 .note b{color:var(--ink)}
-.nav{display:flex;gap:8px;align-items:center;margin-top:18px}
-.nav .sp{flex:1}
+.nav{display:flex;gap:12px;align-items:center;margin-top:18px}
+#btn-next{min-width:150px;font-size:15px}
 .hint{font-size:11.5px;color:var(--muted)}
 /* 物理キーボードが無さそうな端末ではキー操作の案内を出さない */
 @media (hover:none),(pointer:coarse){ .hint.kbd{display:none} }
@@ -146,7 +146,7 @@ h2{font-size:15px;margin:32px 0 10px;color:var(--muted);font-weight:700;letter-s
 .score .big{font-size:44px;font-weight:800;line-height:1.1;color:var(--accent)}
 .score .sub{color:var(--muted);font-size:14px;margin-top:4px}
 .rlist{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.ritem{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:14px;display:flex;gap:10px}
+.ritem{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:15px;display:flex;gap:10px}
 .ritem .m{flex:none;font-weight:800}
 .ritem.ng .m{color:var(--ng)}
 .ritem.ok .m{color:var(--ok)}
@@ -194,9 +194,8 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;text-align:
     <div class="choices" id="choices"></div>
     <div id="reveal"></div>
     <div class="nav">
-      <span class="hint kbd" id="kbdhint">キー A〜D で回答 / Enter で次へ</span>
-      <span class="sp"></span>
       <button class="btn primary hidden" id="btn-next">次へ</button>
+      <span class="hint kbd" id="kbdhint">キー A〜D で回答 / Enter で次へ</span>
     </div>
   </section>
 
