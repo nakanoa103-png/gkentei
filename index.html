@@ -1,0 +1,1447 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>G検定クイズ 🐯🐅🐒</title>
+<style>
+:root{
+  --bg:#f6f5f2; --card:#fff; --ink:#1c1b19; --muted:#6b6862; --line:#e2dfd8;
+  --accent:#c2410c; --accent-soft:#fff1e8;
+  --ok:#15803d; --ok-soft:#eaf6ee; --ng:#b91c1c; --ng-soft:#fdeeee;
+  --torakun:#d97706; --toranii:#7c3aed; --saru:#0e7490;
+  --radius:14px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#16150f; --card:#211f1a; --ink:#eeeae1; --muted:#a09a8e; --line:#35322a;
+    --accent:#fb923c; --accent-soft:#3a2314;
+    --ok:#4ade80; --ok-soft:#16301f; --ng:#f87171; --ng-soft:#331a1a;
+    --torakun:#fbbf24; --toranii:#c4b5fd; --saru:#67e8f9;
+  }
+}
+*{box-sizing:border-box}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic UI",Meiryo,sans-serif;
+  line-height:1.75; -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px 64px}
+header{
+  position:sticky;top:0;z-index:20;background:var(--bg);
+  border-bottom:1px solid var(--line);
+}
+.hd{max-width:680px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.logo{font-weight:700;font-size:15px;letter-spacing:.02em;white-space:nowrap}
+.logo span{font-size:17px}
+.hd .sp{flex:1}
+.bar{height:3px;background:var(--line);position:relative;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s ease}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{
+  border:1px solid var(--line);background:var(--card);border-radius:10px;
+  padding:11px 16px;font-size:14px;font-weight:600;transition:.15s;
+  min-height:44px;
+}
+@media (hover:hover){ .btn:hover{border-color:var(--accent);color:var(--accent)} }
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+@media (hover:hover){ .btn.primary:hover{filter:brightness(1.08);color:#fff} }
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.4;cursor:default}
+h1{font-size:20px;margin:28px 0 6px;letter-spacing:.01em}
+h2{font-size:15px;margin:32px 0 10px;color:var(--muted);font-weight:700;letter-spacing:.04em}
+.lead{color:var(--muted);font-size:14px;margin:0 0 20px}
+
+/* pack cards */
+.pack{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.pack h3{margin:0 0 4px;font-size:16px}
+.pack .desc{color:var(--muted);font-size:13px;margin:0 0 12px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tag{font-size:11px;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:700}
+.tag.grey{background:transparent;border:1px solid var(--line);color:var(--muted)}
+.tag.good{background:var(--ok-soft);color:var(--ok)}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+
+/* drop zone */
+.drop{
+  border:2px dashed var(--line);border-radius:var(--radius);padding:26px 18px;text-align:center;
+  color:var(--muted);font-size:13.5px;transition:.15s;background:transparent;
+}
+.drop.over{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.drop b{display:block;color:var(--ink);font-size:14.5px;margin-bottom:4px}
+.paste{margin-top:14px}
+.paste-h{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:7px}
+.paste textarea{
+  width:100%;resize:vertical;margin-bottom:8px;
+  border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);
+  padding:11px 12px;line-height:1.6;font-family:inherit;
+  font-size:16px; /* 16px未満だとiOSでフォーカス時に画面が拡大される */
+}
+.paste textarea:focus{outline:none;border-color:var(--accent)}
+
+/* quiz */
+.qnum{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.08em;margin:24px 0 8px}
+.qtext{font-size:17.5px;font-weight:700;line-height:1.65;margin:0 0 18px}
+.choices{display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
+.ch{
+  display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;
+  background:var(--card);border:1.5px solid var(--line);border-radius:12px;
+  padding:13px 14px;font-size:15px;line-height:1.6;transition:.12s;
+}
+@media (hover:hover){ .ch:not(:disabled):hover{border-color:var(--accent)} }
+.ch .k{
+  flex:none;width:24px;height:24px;border-radius:7px;background:var(--bg);
+  border:1px solid var(--line);display:grid;place-items:center;
+  font-size:12px;font-weight:800;color:var(--muted);margin-top:1px;
+}
+.ch:disabled{cursor:default;opacity:.55}
+.ch.is-ok{border-color:var(--ok);background:var(--ok-soft);opacity:1}
+.ch.is-ok .k{background:var(--ok);border-color:var(--ok);color:#fff}
+.ch.is-ng{border-color:var(--ng);background:var(--ng-soft);opacity:1}
+.ch.is-ng .k{background:var(--ng);border-color:var(--ng);color:#fff}
+
+/* feedback */
+.fb{
+  background:var(--card);border:1px solid var(--line);border-left:3px solid var(--line);
+  border-radius:10px;padding:13px 15px;margin-bottom:10px;
+}
+.fb.torakun{border-left-color:var(--torakun)}
+.fb.toranii{border-left-color:var(--toranii)}
+.fb.saru{border-left-color:var(--saru)}
+.fb .who{font-size:12.5px;font-weight:800;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.fb.torakun .who{color:var(--torakun)}
+.fb.toranii .who{color:var(--toranii)}
+.fb.saru .who{color:var(--saru)}
+.fb .who em{font-style:normal;font-weight:600;font-size:11px;color:var(--muted);letter-spacing:.04em}
+.fb p{margin:0;font-size:14.5px;line-height:1.7}
+.fb .ref{
+  display:flex;align-items:flex-start;gap:7px;margin-top:9px;
+  font-size:13px;color:var(--accent);text-decoration:none;font-weight:600;
+  line-height:1.55;
+}
+.fb .ref span:last-child{text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(194,65,12,.35)}
+.fb .ref:hover span:last-child{text-decoration-color:currentColor}
+.fb .ref .b{
+  flex:none;white-space:nowrap;margin-top:2px;
+  font-size:10px;font-weight:800;padding:1px 6px;border-radius:4px;
+  background:var(--accent-soft);color:var(--accent);letter-spacing:.04em;
+  text-decoration:none;
+}
+.fb .ref .b.paid{background:var(--accent);color:#fff}
+.note{
+  font-size:13px;color:var(--muted);background:transparent;border:1px dashed var(--line);
+  border-radius:10px;padding:10px 13px;margin-bottom:10px;
+}
+.note b{color:var(--ink)}
+.nav{display:flex;gap:8px;align-items:center;margin-top:18px}
+.nav .sp{flex:1}
+.hint{font-size:11.5px;color:var(--muted)}
+/* 物理キーボードが無さそうな端末ではキー操作の案内を出さない */
+@media (hover:none),(pointer:coarse){ .hint.kbd{display:none} }
+
+/* result */
+.score{text-align:center;padding:26px 0 10px}
+.score .big{font-size:44px;font-weight:800;line-height:1.1;color:var(--accent)}
+.score .sub{color:var(--muted);font-size:14px;margin-top:4px}
+.rlist{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.ritem{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:14px;display:flex;gap:10px}
+.ritem .m{flex:none;font-weight:800}
+.ritem.ng .m{color:var(--ng)}
+.ritem.ok .m{color:var(--ok)}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:16px;text-align:center;color:var(--muted);font-size:12px}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <div class="logo"><span>🐯🐅🐒</span> G検定クイズ</div>
+    <div class="sp"></div>
+    <button class="btn ghost" id="btn-home">ホーム</button>
+  </div>
+  <div class="bar"><i id="progbar"></i></div>
+</header>
+
+<div class="wrap">
+
+  <!-- ===== HOME ===== -->
+  <section id="scr-home">
+    <h1>パックを選ぶ</h1>
+    <p class="lead">問題を解くと、選んだ選択肢ごとに解説が出ます。間違え方によって言うことが変わります。</p>
+    <div id="packlist"></div>
+
+    <h2>データパックを追加</h2>
+    <div class="drop" id="drop">
+      <b>JSONファイルをここにドロップ</b>
+      またはタップしてファイルを選択（複数可）
+      <input type="file" id="file" accept=".json,application/json,text/plain" multiple hidden>
+    </div>
+    <div class="paste">
+      <div class="paste-h">スマホなら、貼り付けのほうが早い</div>
+      <textarea id="paste" rows="4" placeholder="記事からコピーしたJSONをここに貼り付け"></textarea>
+      <button class="btn" id="btn-paste">貼り付けたテキストを読み込む</button>
+    </div>
+    <p class="hint" style="margin-top:14px">読み込んだパックはこの端末に保存され、次回もそのまま使えます。別の端末で使うときは、同じJSONをもう一度読み込んでください（購入した記事から何度でも取得できます）。</p>
+  </section>
+
+  <!-- ===== QUIZ ===== -->
+  <section id="scr-quiz" class="hidden">
+    <div class="qnum" id="qnum"></div>
+    <p class="qtext" id="qtext"></p>
+    <div class="choices" id="choices"></div>
+    <div id="reveal"></div>
+    <div class="nav">
+      <span class="hint kbd" id="kbdhint">キー A〜D で回答 / Enter で次へ</span>
+      <span class="sp"></span>
+      <button class="btn primary hidden" id="btn-next">次へ</button>
+    </div>
+  </section>
+
+  <!-- ===== RESULT ===== -->
+  <section id="scr-result" class="hidden">
+    <div class="score">
+      <div class="big" id="rscore"></div>
+      <div class="sub" id="rsub"></div>
+    </div>
+    <h2>解答の記録</h2>
+    <div class="rlist" id="rlist"></div>
+    <div class="actions">
+      <button class="btn primary" id="btn-retry-ng">間違えた問題だけやり直す</button>
+      <button class="btn" id="btn-retry-all">最初からやり直す</button>
+      <button class="btn ghost" id="btn-back">ホームへ</button>
+    </div>
+  </section>
+
+</div>
+
+<footer>🐯 虎くん ・ 🐅 虎にい ・ 🐒 猿さん がナビゲートします</footer>
+
+<script>
+"use strict";
+
+/* ---------- 話者の配役（ここは固定） ---------- */
+const SPEAKERS = {
+  torakun: { emoji:"🐯", name:"虎くん", role:"ほめる・正解の要点" },
+  toranii: { emoji:"🐅", name:"虎にい", role:"バッサリ切る" },
+  saru:    { emoji:"🐒", name:"猿さん", role:"事実を補う" }
+};
+
+/* ---------- 内蔵パック（体験版） ---------- */
+/* このブロックは packs/hist-01.json から自動生成。手で書き換えないこと。 */
+const BUILTIN = [
+  {
+    "schemaVersion": 1,
+    "pack": {
+      "id": "hist-01",
+      "title": "AIの歴史① 黎明期〜第1次ブーム",
+      "description": "チューリングからダートマス会議、そして最初の冬まで。全18問の体験版。",
+      "free": true,
+      "order": 1,
+      "builtin": true
+    },
+    "questions": [
+      {
+        "id": "q001",
+        "text": "1956年に開催され、初めて「人工知能（Artificial Intelligence）」という言葉が使われた会議の名称は？",
+        "tags": [
+          "歴史",
+          "第1次ブーム"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ダートマス会議",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "大当たり！アイビーリーグの名門やのに、ニューハンプシャーの小さな町にある大学。そこで開かれた夏の合宿から、全部が始まったんよ。",
+            "ref": {
+              "title": "なぜ『人工知能』という名前になったのか",
+              "url": "https://note.com/nakano683/n/n9ec7cf7bb2e1?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "チューリング会議",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "チューリングさんは1954年に亡くなってる。1956年の会議には出られへんのや。答えは大学の名前やで。",
+            "ref": {
+              "title": "チューリングの生涯がわかる映画の話",
+              "url": "https://note.com/nakano683/n/nad6522a4a4be?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "c",
+            "text": "ミンスキー会議",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "参加した人の名前だね。のちに冬の時代を招いた人でもあるよ。",
+            "ref": {
+              "title": "ミンスキーが何をした人か漫画でわかるよ",
+              "url": "https://note.com/nakano683/n/n479d703863c3?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "d",
+            "text": "スタンフォード会議",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "西海岸の名門やけど、この会議とは縁がないんや。舞台は東海岸やで。"
+          }
+        ]
+      },
+      {
+        "id": "q002",
+        "text": "「人工知能（Artificial Intelligence）」という言葉を提案し、ダートマス会議を主催した人物は？",
+        "tags": [
+          "歴史",
+          "人物"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ジョン・マッカーシー",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！ダートマス会議の言い出しっぺ。プログラミング言語LISPを作った人でもあるよ。",
+            "ref": {
+              "title": "AIの名前を作った男が漫画で出てくるよ",
+              "url": "https://note.com/nakano683/n/n479d703863c3?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "アラン・チューリング",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "「機械は考えることができるか」を問いかけた人だね。でもAIという言葉自体は使っていないんだ。惜しい。",
+            "ref": {
+              "title": "チューリングが問いかけたこと",
+              "url": "https://note.com/nakano683/n/nb01046ea5a8e?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "c",
+            "text": "マービン・ミンスキー",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "会議には参加しとる。せやけど名付け親とちゃうんや。",
+            "ref": {
+              "title": "ミンスキーが何をした人かわかるよ",
+              "url": "https://note.com/nakano683/n/n0c23228ac411?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "d",
+            "text": "クロード・シャノン",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "情報理論の父。この会議の参加者でもあるよ。人選は合ってるけど役どころが違うね。"
+          }
+        ]
+      },
+      {
+        "id": "q003",
+        "text": "1950年にアラン・チューリングが論文で提案した、機械が知能を持つかどうかを判定する方法は？",
+        "tags": [
+          "歴史",
+          "チューリングテスト"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "チューリングテスト",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！別名イミテーション・ゲーム。判定役の人間が、相手を機械だと見抜けなければ合格、という考え方だよ。",
+            "ref": {
+              "title": "『機械が考える』とはどういうことか",
+              "url": "https://note.com/nakano683/n/nb01046ea5a8e?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "ローブナーテスト",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "ローブナーコンテストなら実在するよ。ある有名なテストに合格できるかを競う大会のほうだね。かなり惜しい。"
+          },
+          {
+            "id": "c",
+            "text": "ノイマンテスト",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "フォン・ノイマンはコンピュータの構造を作った人や。テストの名前とちゃう。"
+          },
+          {
+            "id": "d",
+            "text": "ダートマステスト",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "そんなテストあらへん。ダートマスは会議の名前や。",
+            "ref": {
+              "title": "ダートマスで何があったのか",
+              "url": "https://note.com/nakano683/n/n9ec7cf7bb2e1?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          }
+        ]
+      },
+      {
+        "id": "q004",
+        "text": "第1次AIブーム（1950年代後半〜1960年代）を支えた中心的な技術は？",
+        "tags": [
+          "歴史",
+          "第1次ブーム"
+        ],
+        "note": "第1次＝探索と推論／第2次＝知識／第3次＝機械学習。この3点セットで覚える。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "探索と推論",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！迷路やパズル、チェスみたいに、手を片っぱしから試して答えにたどり着くやり方だよ。",
+            "ref": {
+              "title": "カーナビの仕組みでわかるAIの探索",
+              "url": "https://note.com/nakano683/n/n2bf72a2e8e0d?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "知識表現（エキスパートシステム）",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "それは第2次ブームの主役だね。時代が20年ずれてるよ。"
+          },
+          {
+            "id": "c",
+            "text": "機械学習",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "第3次ブームの主役。順番でいうと最後だね。"
+          },
+          {
+            "id": "d",
+            "text": "ディープラーニング",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "60年前にディープラーニングて。気が早すぎるわ。"
+          }
+        ]
+      },
+      {
+        "id": "q005",
+        "text": "第1次AIブームが終わり、最初の「冬の時代」を迎えた理由として最も適切なものは？",
+        "tags": [
+          "歴史",
+          "トイ・プロブレム"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "迷路やパズルは解けても、現実の複雑な問題は解けなかったから",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！これを「トイ・プロブレム（おもちゃの問題）」って言うよ。ルールがきっちり決まった世界でしか動けなかったんだ。",
+            "ref": {
+              "title": "第1次ブームがどう終わったのか",
+              "url": "https://note.com/nakano683/n/nc1e03d5e4fe7?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "知識をルールとして人間が入力する作業が膨大すぎたから",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "それは第2次ブームの終わり方（知識獲得のボトルネック）だね。ブームを1つ間違えてるよ。ここは本番でもよく狙われるところ。",
+            "ref": {
+              "title": "ブームと冬が繰り返される理由",
+              "url": "https://note.com/nakano683/n/n89807bcd4307?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "c",
+            "text": "コンピュータの価格が高すぎて普及しなかったから",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "高かったんはほんまや。せやけど冬を招いた直接の原因はそことちゃう。"
+          },
+          {
+            "id": "d",
+            "text": "インターネットが普及しておらずデータが集まらなかったから",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "データが足りひん、いう話は第3次ブームの文脈やな。60年代にネットの話は出てこうへん。"
+          }
+        ]
+      },
+      {
+        "id": "q006",
+        "text": "1958年にフランク・ローゼンブラットが発表した、ニューラルネットワークの原型となるモデルは？",
+        "tags": [
+          "歴史",
+          "ニューラルネットワーク"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "パーセプトロン",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！脳の神経細胞をまねた、いちばん単純なモデルだよ。ここが全部の出発点。",
+            "ref": {
+              "title": "人工ニューロンが一度死んだ話",
+              "url": "https://note.com/nakano683/n/n0c23228ac411?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "ネオコグニトロン",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "福島邦彦さんが1980年ごろに作ったモデルだね。CNNの原型で、20年あとの話だよ。"
+          },
+          {
+            "id": "c",
+            "text": "ボルツマンマシン",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "1985年、ヒントンたちのモデル。こっちも後年だね。"
+          },
+          {
+            "id": "d",
+            "text": "オートエンコーダ",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "それはずっとあと、事前学習の話で出てくるやつや。50年代とちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q007",
+        "text": "ミンスキーとパパートが1969年に指摘した、単純パーセプトロンの限界とは？",
+        "tags": [
+          "歴史",
+          "ニューラルネットワーク"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "線形分離できない問題（XORなど）が解けない",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！直線1本で分けられない問題はお手上げ、という指摘だよ。これでニューラルネットの研究が一気に冷え込んだんだ。",
+            "ref": {
+              "title": "XOR問題でなぜ研究が止まったのか",
+              "url": "https://note.com/nakano683/n/n0c23228ac411?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "層を深くすると勾配が消えてしまう",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "勾配消失問題だね。それはずっとあと、層を深くできるようになってから出てきた悩みだよ。"
+          },
+          {
+            "id": "c",
+            "text": "学習に膨大な計算時間がかかる",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "時間はかかった。せやけどミンスキーの指摘は「そもそも原理的に解けへん」いう話や。もっときつい指摘やで。"
+          },
+          {
+            "id": "d",
+            "text": "画像データしか扱うことができない",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "そんな制限はあらへん。むしろ画像が得意になるんは、ずっとあとの話や。"
+          }
+        ]
+      },
+      {
+        "id": "q008",
+        "text": "1966年にジョセフ・ワイゼンバウムが開発した、人間と自然言語で対話する初期のプログラムは？",
+        "tags": [
+          "歴史",
+          "対話システム"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ELIZA（イライザ）",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！精神科医のふりをして、相手の言葉をほぼオウム返しにするだけ。なのに本気で悩みを打ち明ける人が続出したんよ。",
+            "ref": {
+              "title": "60年の眠りから覚めたELIZAの話",
+              "url": "https://note.com/nakano683/n/n0b3a35711bda?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "PARRY（パリー）",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "こっちも実在する対話プログラムだよ。1972年、今度は医者じゃなく患者の役。かなり惜しい。"
+          },
+          {
+            "id": "c",
+            "text": "SHRDLU（シュルドゥル）",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "積み木の世界で命令を理解するプログラムだね。1970年ごろ、テリー・ウィノグラード作。これも第1次ブームの代表作だよ。"
+          },
+          {
+            "id": "d",
+            "text": "ALICE（アリス）",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "1995年生まれのチャットボットや。30年ほど新しいで。"
+          }
+        ]
+      },
+      {
+        "id": "q009",
+        "text": "1956年のダートマス会議で実演された、世界初の人工知能プログラムとされるものは？",
+        "tags": [
+          "歴史",
+          "第1次ブーム"
+        ],
+        "note": "ダートマス会議＝名前が生まれた場所。ロジック・セオリスト＝そこで動いた最初の中身。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "ロジック・セオリスト",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！ニューウェルとサイモンが作った、数学の定理を自分で証明していくプログラム。会議の目玉やったんよ。",
+            "ref": {
+              "title": "会議で何が実演されたのか",
+              "url": "https://note.com/nakano683/n/n9ec7cf7bb2e1?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "ジェネラル・プロブレム・ソルバー",
+            "speaker": "saru",
+            "feedback": "同じ二人が翌年に作った後継のプログラムだね。順番が1つあとだよ。",
+            "correct": false
+          },
+          {
+            "id": "c",
+            "text": "ディープ・ブルー",
+            "speaker": "toranii",
+            "feedback": "チェスの世界王者に勝ったコンピュータや。1997年、40年も先の話やで。",
+            "correct": false
+          },
+          {
+            "id": "d",
+            "text": "ワトソン",
+            "speaker": "toranii",
+            "feedback": "クイズ番組で優勝したIBMのシステムや。2011年、半世紀も先やないか。",
+            "correct": false
+          }
+        ]
+      },
+      {
+        "id": "q010",
+        "text": "1936年にアラン・チューリングが考案した、あらゆる計算を実行できる理論上の機械は？",
+        "tags": [
+          "歴史",
+          "計算機"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "チューリングマシン",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！実物じゃなくて紙の上の理論だよ。今のコンピュータは全部この考え方の子どもなんだ。",
+            "ref": {
+              "title": "機械が考えるとは？ の第1話",
+              "url": "https://note.com/nakano683/n/nb01046ea5a8e?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "ノイマン型コンピュータ",
+            "speaker": "saru",
+            "feedback": "プログラムを記憶装置に置く方式のことだね。1945年ごろ、10年ほどあとの話だよ。",
+            "correct": false
+          },
+          {
+            "id": "c",
+            "text": "ボンベ",
+            "speaker": "saru",
+            "feedback": "チューリングが暗号解読のために実際に作った機械だね。人は合ってるけど、こっちは理論じゃなく実機だよ。",
+            "correct": false,
+            "ref": {
+              "title": "チューリングが暗号を解いた実話",
+              "url": "https://note.com/nakano683/n/nad6522a4a4be?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "d",
+            "text": "階差機関",
+            "speaker": "toranii",
+            "feedback": "バベッジが19世紀に構想した計算機や。100年ほど古いで。",
+            "correct": false
+          }
+        ]
+      },
+      {
+        "id": "q011",
+        "text": "単純な仕組みの対話プログラムに対して、人が「自分を理解してくれている」と感じてしまう現象を何と呼ぶ？",
+        "tags": [
+          "歴史",
+          "対話システム"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "イライザ効果",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！中身はほぼオウム返しなのに、人は勝手に心を読み取ってしまう。今の対話AIでも同じことが起きてるよ。",
+            "ref": {
+              "title": "なぜ人はELIZAに心を許したのか",
+              "url": "https://note.com/nakano683/n/n0b3a35711bda?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "不気味の谷",
+            "speaker": "saru",
+            "feedback": "人に似せすぎると逆に気味悪く感じる現象だね。森政弘さんが1970年に提唱した。同じAIの話だけど別物だよ。",
+            "correct": false
+          },
+          {
+            "id": "c",
+            "text": "ハロー効果",
+            "speaker": "saru",
+            "feedback": "1つの目立つ長所で全体の評価が引っ張られる心理現象だね。実在するけど、AIの話じゃないよ。",
+            "correct": false
+          },
+          {
+            "id": "d",
+            "text": "チューリング効果",
+            "speaker": "toranii",
+            "feedback": "そんな効果はあらへん。名前だけそれっぽいやつに引っかかったな。",
+            "correct": false
+          }
+        ]
+      },
+      {
+        "id": "q012",
+        "text": "「今から起きることに関係のあることだけを、どうやって選び出すか」というAIの根本的な難問を何という？",
+        "tags": [
+          "歴史",
+          "難問"
+        ],
+        "note": "フレーム問題＝何を考えなくていいかが決められない。シンボルグラウンディング問題＝言葉と実物が結びつかない。2つセットで狙われる。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "フレーム問題",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！1969年にマッカーシーとヘイズが出した問題だよ。何を考えなくていいかを決められないのが、いちばん厄介なんだ。",
+            "ref": {
+              "title": "階段を降りるだけで無限の条件が要る、という話",
+              "url": "https://note.com/nakano683/n/n89807bcd4307?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "シンボルグラウンディング問題",
+            "speaker": "saru",
+            "feedback": "言葉と、それが指す実物を結びつけられない問題だね。こっちも有名な難問だけど別のものだよ。",
+            "correct": false
+          },
+          {
+            "id": "c",
+            "text": "組合せ爆発",
+            "speaker": "saru",
+            "feedback": "選択肢が増えすぎて計算が終わらなくなることだね。関係は深いけど、名前が違うよ。",
+            "correct": false,
+            "ref": {
+              "title": "組み合わせ爆発を階段の例で説明してるよ",
+              "url": "https://note.com/nakano683/n/n89807bcd4307?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "d",
+            "text": "停止性問題",
+            "speaker": "toranii",
+            "feedback": "プログラムがいつか止まるかを判定できひん、いう計算理論の話や。畑がちゃう。",
+            "correct": false
+          }
+        ]
+      },
+      {
+        "id": "q013",
+        "text": "中国語が分からない人が、部屋の中でマニュアル通りに記号を並べ替えるだけで、外からは中国語を理解しているように見える。この思考実験は？",
+        "tags": [
+          "歴史",
+          "哲学"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "中国語の部屋",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！ジョン・サールが1980年に出した反論だよ。それらしく振る舞えることと、意味が分かっていることは別やろ、という話。",
+            "ref": {
+              "title": "ジョン・サールの反論も出てくるよ",
+              "url": "https://note.com/nakano683/n/nb01046ea5a8e?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "トロッコ問題",
+            "speaker": "saru",
+            "feedback": "どちらを助けるか選ばせる倫理の思考実験だね。AI倫理でよく出てくるけど、これじゃないよ。",
+            "correct": false
+          },
+          {
+            "id": "c",
+            "text": "洞窟の比喩",
+            "speaker": "saru",
+            "feedback": "プラトンの哲学の話だね。2000年以上さかのぼるよ。",
+            "correct": false
+          },
+          {
+            "id": "d",
+            "text": "シュレディンガーの猫",
+            "speaker": "toranii",
+            "feedback": "量子力学の思考実験や。分野がまるごとちゃう。",
+            "correct": false
+          }
+        ]
+      },
+      {
+        "id": "q014",
+        "text": "1946年に完成した、世界初の汎用電子式コンピュータとされるものは？",
+        "tags": [
+          "歴史",
+          "計算機"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ENIAC（エニアック）",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！真空管は1万7千本あまり、重さ30トン。ケーブルを差し替えてこれを動かしていたのは、6人の女性たちだったんよ。",
+            "ref": {
+              "title": "ENIACを動かした6人の女性の話",
+              "url": "https://note.com/nakano683/n/nad6522a4a4be?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "UNIVAC（ユニバック）",
+            "speaker": "saru",
+            "feedback": "商用コンピュータの第1号だね。1951年、5年ほどあとだよ。惜しい。",
+            "correct": false
+          },
+          {
+            "id": "c",
+            "text": "ABC（アタナソフ・ベリー・コンピュータ）",
+            "speaker": "saru",
+            "feedback": "もっと古い1940年代前半の電子計算機だね。ただし汎用ではなく、連立方程式を解く専用機だったんだ。",
+            "correct": false
+          },
+          {
+            "id": "d",
+            "text": "Altair 8800",
+            "speaker": "toranii",
+            "feedback": "1975年の個人向けマイコンや。30年も先やで。",
+            "correct": false
+          }
+        ],
+        "note": "ENIAC（1946年）の10年あとに、あの会議でAIという言葉が生まれる。計算機が先、人工知能があと。"
+      },
+      {
+        "id": "q015",
+        "text": "探索の方法のうち、枝分かれのたびに行けるところまで進み、行き止まったら戻ってやり直す方法は？",
+        "tags": [
+          "歴史",
+          "探索"
+        ],
+        "note": "深さ優先＝縦にどこまでも潜る。幅優先＝横を総なめしてから1段下りる。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "深さ優先探索",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！迷路で片手を壁につけたまま進むのと同じやり方だよ。覚えておく量は少なくて済むけど、最短の道が見つかるとは限らない。",
+            "ref": {
+              "title": "探索のやり方をカーナビで理解する",
+              "url": "https://note.com/nakano683/n/n2bf72a2e8e0d?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "幅優先探索",
+            "speaker": "saru",
+            "feedback": "近いところから順に、同じ深さを全部調べてから次へ進む方法だね。ちょうど逆向きだよ。",
+            "correct": false,
+            "ref": {
+              "title": "幅優先との違いもここにあるよ",
+              "url": "https://note.com/nakano683/n/n2bf72a2e8e0d?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "c",
+            "text": "山登り法",
+            "speaker": "saru",
+            "feedback": "今より良くなる方向にだけ進む方法だね。途中の小さな丘で止まってしまうことがある。これも探索だけど別物だよ。",
+            "correct": false
+          },
+          {
+            "id": "d",
+            "text": "モンテカルロ法",
+            "speaker": "toranii",
+            "feedback": "乱数でたくさん試して当たりをつけるやり方や。しらみつぶしとは考え方がちゃう。",
+            "correct": false
+          }
+        ]
+      },
+      {
+        "id": "q016",
+        "text": "2014年、チューリングテストに史上初めて合格したと発表されたプログラムは？",
+        "tags": [
+          "歴史",
+          "チューリングテスト"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ユージーン・グーツマン",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！13歳のウクライナ人少年という設定で、審査員の3割をだましたんよ。「子どもやから受け答えが変でも仕方ない」という設定込みなので、今も議論はあるけどな。",
+            "ref": {
+              "title": "チューリングテストの中身がわかるよ",
+              "url": "https://note.com/nakano683/n/nb01046ea5a8e?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "Tay（テイ）",
+            "speaker": "saru",
+            "feedback": "2016年にマイクロソフトが公開した対話ボットだね。差別的な発言を学んでしまい1日で公開停止。合格とは逆の意味で有名だよ。",
+            "correct": false
+          },
+          {
+            "id": "c",
+            "text": "AlphaGo",
+            "speaker": "toranii",
+            "feedback": "囲碁で世界トップに勝ったやつや。2016年、対話とはまるでちゃう。",
+            "correct": false
+          },
+          {
+            "id": "d",
+            "text": "Siri",
+            "speaker": "toranii",
+            "feedback": "2011年からある音声アシスタントや。テストを受けたわけやない。",
+            "correct": false
+          }
+        ]
+      },
+      {
+        "id": "q017",
+        "text": "1943年にマカロックとピッツが発表した、脳の神経細胞のはたらきを数式で表したモデルは？",
+        "tags": [
+          "歴史",
+          "ニューラルネットワーク"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "形式ニューロン",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！入力を足し合わせて、しきい値を超えたら1を出す。たったこれだけが、すべての出発点なんよ。",
+            "ref": {
+              "title": "人工ニューロンの始まりから",
+              "url": "https://note.com/nakano683/n/n0c23228ac411?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "ホップフィールドネットワーク",
+            "speaker": "saru",
+            "feedback": "1982年に出てきたモデルだね。40年ほどあとだよ。",
+            "correct": false
+          },
+          {
+            "id": "c",
+            "text": "ベイジアンネットワーク",
+            "speaker": "saru",
+            "feedback": "確率で物事のつながりを表すモデルだね。脳をまねたものじゃないよ。",
+            "correct": false
+          },
+          {
+            "id": "d",
+            "text": "決定木",
+            "speaker": "toranii",
+            "feedback": "条件で枝分かれさせて分類する手法や。脳とは関係あらへん。",
+            "correct": false
+          }
+        ]
+      },
+      {
+        "id": "q018",
+        "text": "哲学者ジョン・サールが用いた、「人間と同じように心を持つAI」と「あくまで道具として問題を解くAI」を区別する言葉は？",
+        "tags": [
+          "歴史",
+          "哲学"
+        ],
+        "note": "今実際に動いているAIは、どれだけ賢く見えても全部「弱いAI」のほう。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "強いAIと弱いAI",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！心があるかどうかで分ける言い方だよ。今の世の中に前者はまだ一つも存在しないんだ。",
+            "ref": {
+              "title": "ジョン・サールが漫画で出てくるよ",
+              "url": "https://note.com/nakano683/n/n479d703863c3?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "汎用AIと特化型AI",
+            "speaker": "saru",
+            "feedback": "これも実在する区別だね。ただし何でもできるか一芸かという軸で、心があるかどうかの話ではないよ。",
+            "correct": false
+          },
+          {
+            "id": "c",
+            "text": "シンボリックAIとコネクショニズム",
+            "speaker": "saru",
+            "feedback": "記号で考えるか、神経回路をまねるか、という作り方の違いだね。これも実在するけど別の軸だよ。",
+            "correct": false
+          },
+          {
+            "id": "d",
+            "text": "教師ありAIと教師なしAI",
+            "speaker": "toranii",
+            "feedback": "それは学習のさせ方の区別や。心の話とちゃう。",
+            "correct": false
+          }
+        ]
+      }
+    ]
+  }
+];
+
+/* ---------- ストレージ ---------- */
+const LS_PROG = "gkentei.progress.v1";
+const LS_PACK = "gkentei.packs.v1";
+function lsGet(k, fb){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; }catch(e){ return fb; } }
+function lsSet(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+let progress = lsGet(LS_PROG, {});          // { packId: { qid: {ok, ng, last} } }
+let imported = lsGet(LS_PACK, []);          // 読み込んだパックの配列
+
+/* ---------- 状態 ---------- */
+const state = { packs:[], pack:null, queue:[], idx:0, answered:false, scored:{}, session:[] };
+
+const $ = function(id){ return document.getElementById(id); };
+function esc(s){
+  return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+
+/* ---------- パック検証 ---------- */
+function validatePack(raw){
+  const errs = [], warns = [];
+  if(!raw || typeof raw !== "object") return { errs:["JSONの中身がオブジェクトではありません"], warns:warns };
+  if(raw.schemaVersion !== 1) errs.push('schemaVersion は 1 を指定してください（今: ' + raw.schemaVersion + '）');
+  if(!raw.pack || !raw.pack.id) errs.push("pack.id がありません");
+  if(!Array.isArray(raw.questions) || !raw.questions.length) errs.push("questions が空です");
+  (raw.questions||[]).forEach(function(q, i){
+    const at = "questions[" + i + "]" + (q && q.id ? "(" + q.id + ")" : "");
+    if(!q.id) errs.push(at + ": id がありません");
+    if(!q.text) errs.push(at + ": text がありません");
+    if(!Array.isArray(q.choices) || q.choices.length < 2){ errs.push(at + ": choices が2つ未満"); return; }
+    const ids = {}; let nOk = 0;
+    q.choices.forEach(function(c, j){
+      if(!c.id) errs.push(at + ".choices[" + j + "]: id がありません");
+      else if(ids[c.id]) errs.push(at + ": choice id '" + c.id + "' が重複しています");
+      else ids[c.id] = 1;
+      if(!c.text) errs.push(at + ".choices[" + j + "]: text がありません");
+      if(c.correct === true) nOk++;
+      if(c.speaker && !SPEAKERS[c.speaker]) errs.push(at + ".choices[" + j + "]: speaker '" + c.speaker + "' は未定義（torakun/toranii/saru）");
+    });
+    if(nOk !== 1) errs.push(at + ": correct:true がちょうど1つ必要です（今: " + nOk + "）");
+
+    // 不正解時に正解を開かない設計なので、不正解のヒントが答えそのものを
+    // 書いてしまっていないかを見る。書いてあると誤答した瞬間に答えが割れる。
+    const right = q.choices.filter(function(c){ return c.correct === true; })[0];
+    if(right && right.text){
+      const keys = [right.text];
+      const m1 = /^([^（(]+)/.exec(right.text);
+      if(m1 && m1[1].trim().length >= 3) keys.push(m1[1].trim());
+      const m2 = /[（(]([^）)]+)[）)]/.exec(right.text);
+      if(m2 && m2[1].trim().length >= 3) keys.push(m2[1].trim());
+      q.choices.forEach(function(c){
+        if(c.correct === true) return;
+        if(!c.feedback){ warns.push(at + " 選択肢「" + (c.text||"?") + "」に feedback がありません（誤答しても何も出ません）"); return; }
+        const blob = c.feedback + " " + ((c.ref && c.ref.title) || "");
+        for(let k = 0; k < keys.length; k++){
+          if(blob.indexOf(keys[k]) > -1){
+            warns.push(at + " 選択肢「" + c.text + "」のヒントに正解「" + keys[k] + "」が書かれています（誤答した瞬間に答えが割れます）");
+            return;
+          }
+        }
+      });
+      if(!right.feedback) warns.push(at + ": 正解の選択肢に feedback がありません");
+    }
+  });
+  return { errs:errs, warns:warns };
+}
+
+/* ---------- 進捗 ---------- */
+function packStats(p){
+  const rec = progress[p.pack.id] || {};
+  let done = 0, ok = 0, ng = 0;
+  p.questions.forEach(function(q){
+    const r = rec[q.id];
+    if(r && (r.ok || r.ng)){ done++; if(r.last === "ok") ok++; else ng++; }
+  });
+  return { total:p.questions.length, done:done, ok:ok, ng:ng };
+}
+function markAnswer(packId, qid, correct){
+  if(!progress[packId]) progress[packId] = {};
+  const r = progress[packId][qid] || { ok:0, ng:0, last:null };
+  if(correct) r.ok++; else r.ng++;
+  r.last = correct ? "ok" : "ng";
+  progress[packId][qid] = r;
+  lsSet(LS_PROG, progress);
+}
+
+/* ---------- 画面 ---------- */
+function show(which){
+  ["home","quiz","result"].forEach(function(s){ $("scr-"+s).classList.toggle("hidden", s !== which); });
+  window.scrollTo(0,0);
+}
+function setBar(pct){ $("progbar").style.width = Math.max(0, Math.min(100, pct)) + "%"; }
+
+function renderHome(){
+  state.packs = BUILTIN.concat(imported);
+  const html = state.packs.map(function(p){
+    const s = packStats(p);
+    const rate = s.done ? Math.round(s.ok / s.done * 100) : 0;
+    const tags = [];
+    tags.push('<span class="tag">' + (p.pack.free ? "体験版" : "データパック") + "</span>");
+    tags.push('<span class="tag grey">' + s.total + "問</span>");
+    if(s.done) tags.push('<span class="tag ' + (rate>=80?"good":"grey") + '">正答 ' + rate + "% （" + s.done + "/" + s.total + "）</span>");
+    if(s.ng) tags.push('<span class="tag grey">要復習 ' + s.ng + "問</span>");
+    return '<div class="pack">' +
+      "<h3>" + esc(p.pack.title) + "</h3>" +
+      (p.pack.description ? '<p class="desc">' + esc(p.pack.description) + "</p>" : "") +
+      '<div class="meta">' + tags.join("") + "</div>" +
+      '<div class="actions">' +
+        '<button class="btn primary" data-start="' + esc(p.pack.id) + '" data-mode="all">全問を解く</button>' +
+        (s.ng ? '<button class="btn" data-start="' + esc(p.pack.id) + '" data-mode="ng">間違えた問題だけ（' + s.ng + '）</button>' : "") +
+        (s.done && s.done < s.total ? '<button class="btn" data-start="' + esc(p.pack.id) + '" data-mode="new">未挑戦だけ（' + (s.total - s.done) + '）</button>' : "") +
+        (s.done ? '<button class="btn ghost" data-reset="' + esc(p.pack.id) + '">記録を消す</button>' : "") +
+        (p.pack.builtin ? "" : '<button class="btn ghost" data-remove="' + esc(p.pack.id) + '">削除</button>') +
+      "</div></div>";
+  }).join("");
+  $("packlist").innerHTML = html;
+  setBar(0);
+  show("home");
+}
+
+function startQuiz(packId, mode){
+  const p = state.packs.filter(function(x){ return x.pack.id === packId; })[0];
+  if(!p) return;
+  const rec = progress[packId] || {};
+  let qs = p.questions;
+  if(mode === "ng") qs = qs.filter(function(q){ const r = rec[q.id]; return r && r.last === "ng"; });
+  if(mode === "new") qs = qs.filter(function(q){ const r = rec[q.id]; return !r || (!r.ok && !r.ng); });
+  if(!qs.length){ alert("対象の問題がありません。"); return; }
+  state.pack = p;
+  state.queue = shuffle(qs);
+  state.idx = 0;
+  state.session = [];
+  state.scored = {};
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q = state.queue[state.idx];
+  state.answered = false;
+  $("qnum").textContent = "第 " + (state.idx + 1) + " 問 / 全 " + state.queue.length + " 問　　" + state.pack.pack.title;
+  $("qtext").textContent = q.text;
+  $("reveal").innerHTML = "";
+  $("btn-next").classList.add("hidden");
+  $("kbdhint").classList.remove("hidden");
+  setBar(state.idx / state.queue.length * 100);
+
+  const order = (q.shuffle === false) ? q.choices.slice() : shuffle(q.choices);
+  state.order = order;
+  const LBL = ["A","B","C","D","E","F"];
+  $("choices").innerHTML = order.map(function(c, i){
+    return '<button class="ch" data-cid="' + esc(c.id) + '">' +
+             '<span class="k">' + LBL[i] + "</span>" +
+             "<span>" + esc(c.text) + "</span>" +
+           "</button>";
+  }).join("");
+  show("quiz");
+}
+
+function fbCard(c){
+  const sp = SPEAKERS[c.speaker] || SPEAKERS.saru;
+  const key = SPEAKERS[c.speaker] ? c.speaker : "saru";
+  let ref = "";
+  if(c.ref && c.ref.url){
+    ref = '<a class="ref" href="' + esc(c.ref.url) + '" target="_blank" rel="noopener noreferrer">' +
+          '<span class="b' + (c.ref.paid ? " paid" : "") + '">' + (c.ref.paid ? "有料記事" : "無料記事") + "</span>" +
+          "<span>" + esc(c.ref.title || "参考記事を読む") + " →</span></a>";
+  }
+  return '<div class="fb ' + key + '">' +
+    '<div class="who">' + sp.emoji + " " + sp.name + " <em>" + (c.correct ? "正解の解説" : "あなたの選択") + "</em></div>" +
+    "<p>" + esc(c.feedback || "") + "</p>" + ref + "</div>";
+}
+
+function answer(cid){
+  if(state.answered) return;
+  state.answered = true;
+  const q = state.queue[state.idx];
+  const picked = q.choices.filter(function(c){ return c.id === cid; })[0];
+  const right = q.choices.filter(function(c){ return c.correct === true; })[0];
+  const isOk = !!(picked && picked.correct);
+
+  // 1問につき解答は1回。間違えても選び直させず、そのまま次へ進める。
+  if(!state.scored[q.id]){
+    state.scored[q.id] = 1;
+    markAnswer(state.pack.pack.id, q.id, isOk);
+    state.session.push({ q:q, ok:isOk, right:right });
+  }
+
+  // 正解・不正解にかかわらず全選択肢をロックし、選んだものだけ色を付ける。
+  // 不正解でも正解の位置は示さない。
+  Array.prototype.forEach.call($("choices").children, function(b){
+    b.disabled = true;
+    if(b.getAttribute("data-cid") === cid) b.classList.add(isOk ? "is-ok" : "is-ng");
+  });
+
+  // 出るカードは常に1枚だけ。選んだ選択肢のセリフ。
+  let html = fbCard(picked);
+  if(isOk && q.note) html += '<div class="note"><b>覚え方</b><br>' + esc(q.note) + "</div>";
+  $("reveal").innerHTML = html;
+
+  $("btn-next").textContent = (state.idx + 1 >= state.queue.length) ? "結果を見る" : "次へ";
+  $("btn-next").classList.remove("hidden");
+  $("kbdhint").classList.add("hidden");
+  $("btn-next").focus({ preventScroll:true });
+}
+
+function next(){
+  if(state.idx + 1 >= state.queue.length){ renderResult(); return; }
+  state.idx++;
+  renderQuestion();
+}
+
+function renderResult(){
+  setBar(100);
+  const ok = state.session.filter(function(s){ return s.ok; }).length;
+  const n = state.session.length;
+  const pct = n ? Math.round(ok / n * 100) : 0;
+  $("rscore").textContent = ok + " / " + n + "問　" + pct + "%";
+  $("rsub").textContent = pct >= 80 ? "🐯 その調子。もう本番いけるで。"
+                        : pct >= 50 ? "🐒 半分は取れてる。間違えた問題だけ回そう。"
+                        : "🐅 まだまだや。もういっぺん。";
+  // 間違えた問題の正解はここでも出さない。記事を読んで確かめてもらう。
+  $("rlist").innerHTML = state.session.map(function(s){
+    const sub = s.ok
+      ? "正解： " + esc(s.right ? s.right.text : "-")
+      : "答えは伏せてあります。記事で確かめて、もう一度どうぞ";
+    return '<div class="ritem ' + (s.ok ? "ok" : "ng") + '">' +
+      '<span class="m">' + (s.ok ? "○" : "×") + "</span>" +
+      "<span>" + esc(s.q.text) +
+      '<br><small style="color:var(--muted)">' + sub + "</small></span></div>";
+  }).join("");
+  $("btn-retry-ng").disabled = (ok === n);
+  show("result");
+}
+
+/* ---------- パック読み込み ---------- */
+function addPack(raw, filename){
+  const v = validatePack(raw);
+  if(v.errs.length){
+    alert("読み込めませんでした： " + (filename || "") + "\n\n" + v.errs.slice(0,8).join("\n") +
+          (v.errs.length > 8 ? "\n…ほか " + (v.errs.length - 8) + "件" : ""));
+    return false;
+  }
+  if(BUILTIN.some(function(p){ return p.pack.id === raw.pack.id; })){
+    alert("「" + raw.pack.title + "」は内蔵の体験版と同じIDです。読み込みをスキップしました。");
+    return false;
+  }
+  const i = imported.findIndex(function(p){ return p.pack.id === raw.pack.id; });
+  if(i >= 0){
+    if(!confirm("「" + raw.pack.title + "」は既に読み込み済みです。上書きしますか？（解答記録は残ります）")) return false;
+    imported[i] = raw;
+  } else {
+    imported.push(raw);
+  }
+  lsSet(LS_PACK, imported);
+  if(v.warns.length){
+    alert("読み込みました（" + raw.pack.title + "）。ただし気になる点があります：\n\n" +
+          v.warns.slice(0,8).join("\n") +
+          (v.warns.length > 8 ? "\n…ほか " + (v.warns.length - 8) + "件" : ""));
+  }
+  return true;
+}
+// 記事からコピーした文字列を読む。コードフェンスや前後の説明文が
+// 混ざっていても拾えるようにしておく（コピー範囲は必ずズレるため）。
+function parsePasted(text){
+  let t = String(text == null ? "" : text).trim();
+  t = t.replace(/^```[a-zA-Z]*\s*/, "").replace(/```\s*$/, "").trim();
+  if(t.charAt(0) !== "{" && t.charAt(0) !== "["){
+    const i = t.indexOf("{"), j = t.lastIndexOf("}");
+    if(i > -1 && j > i) t = t.slice(i, j + 1);
+  }
+  return JSON.parse(t);
+}
+
+function readFiles(files){
+  let n = 0, pending = files.length;
+  if(!pending) return;
+  Array.prototype.forEach.call(files, function(f){
+    const fr = new FileReader();
+    fr.onload = function(){
+      let raw = null;
+      try{ raw = JSON.parse(fr.result); }
+      catch(e){ alert(f.name + " はJSONとして読めませんでした。\n" + e.message); }
+      if(raw && addPack(raw, f.name)) n++;
+      if(--pending === 0){ renderHome(); if(n) alert(n + "個のパックを追加しました。"); }
+    };
+    fr.onerror = function(){ if(--pending === 0) renderHome(); };
+    fr.readAsText(f, "utf-8");
+  });
+}
+
+/* ---------- イベント ---------- */
+$("packlist").addEventListener("click", function(e){
+  const b = e.target.closest("button");
+  if(!b) return;
+  if(b.dataset.start) startQuiz(b.dataset.start, b.dataset.mode);
+  else if(b.dataset.reset){
+    if(confirm("このパックの解答記録を消します。よろしいですか？")){
+      delete progress[b.dataset.reset]; lsSet(LS_PROG, progress); renderHome();
+    }
+  } else if(b.dataset.remove){
+    if(confirm("このパックを削除します。解答記録も消えます。")){
+      imported = imported.filter(function(p){ return p.pack.id !== b.dataset.remove; });
+      delete progress[b.dataset.remove];
+      lsSet(LS_PACK, imported); lsSet(LS_PROG, progress); renderHome();
+    }
+  }
+});
+$("choices").addEventListener("click", function(e){
+  const b = e.target.closest("button.ch");
+  if(b && !b.disabled) answer(b.getAttribute("data-cid"));
+});
+$("btn-next").addEventListener("click", next);
+$("btn-home").addEventListener("click", renderHome);
+$("btn-back").addEventListener("click", renderHome);
+$("btn-retry-all").addEventListener("click", function(){ startQuiz(state.pack.pack.id, "all"); });
+$("btn-retry-ng").addEventListener("click", function(){ startQuiz(state.pack.pack.id, "ng"); });
+
+$("btn-paste").addEventListener("click", function(){
+  const raw = $("paste").value;
+  if(!raw.trim()){ alert("貼り付け欄が空です。"); return; }
+  let obj = null;
+  try{ obj = parsePasted(raw); }
+  catch(e){
+    alert("JSONとして読めませんでした。\n\n" + e.message +
+          "\n\n記事に書いてある範囲を、余計な行を入れずにコピーしてください。");
+    return;
+  }
+  const list = Array.isArray(obj) ? obj : [obj];
+  let n = 0;
+  list.forEach(function(o){ if(addPack(o, "貼り付けたテキスト")) n++; });
+  if(n){ $("paste").value = ""; renderHome(); alert(n + "個のパックを追加しました。"); }
+});
+
+const drop = $("drop"), file = $("file");
+drop.addEventListener("click", function(){ file.click(); });
+file.addEventListener("change", function(){ readFiles(file.files); file.value = ""; });
+["dragenter","dragover"].forEach(function(ev){
+  drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.add("over"); });
+});
+["dragleave","drop"].forEach(function(ev){
+  drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.remove("over"); });
+});
+drop.addEventListener("drop", function(e){ if(e.dataTransfer && e.dataTransfer.files) readFiles(e.dataTransfer.files); });
+window.addEventListener("dragover", function(e){ e.preventDefault(); });
+window.addEventListener("drop", function(e){ e.preventDefault(); });
+
+document.addEventListener("keydown", function(e){
+  if($("scr-quiz").classList.contains("hidden")) return;
+  if(!state.answered){
+    // 1文字キーのみ受け付ける。ArrowDown などの複数文字キー名を
+    // 文字列比較で拾ってしまわないように length を必ず見る。
+    if(e.key.length !== 1) return;
+    let i = -1;
+    const k = e.key.toLowerCase();
+    if(k >= "1" && k <= "6") i = +k - 1;
+    else if(k >= "a" && k <= "f") i = k.charCodeAt(0) - 97;
+    if(i < 0 || !state.order || !state.order[i]) return;
+    const btn = $("choices").querySelector('[data-cid="' + state.order[i].id + '"]');
+    if(btn && !btn.disabled){ e.preventDefault(); answer(state.order[i].id); }
+  } else if(e.key === "Enter" || e.key === " "){
+    e.preventDefault(); next();
+  }
+});
+
+renderHome();
+</script>
+</body>
+</html>
