@@ -228,8 +228,8 @@ const SPEAKERS = {
   saru:    { emoji:"🐒", name:"猿さん", role:"事実を補う" }
 };
 
-/* ---------- 内蔵パック（体験版） ---------- */
-/* このブロックは packs/hist-01.json から自動生成。手で書き換えないこと。 */
+/* ---------- 内蔵パック（無料分） ---------- */
+/* このブロックは packs/*.json から自動生成。手で書き換えないこと。 */
 const BUILTIN = [
   {
     "schemaVersion": 1,
@@ -429,14 +429,24 @@ const BUILTIN = [
             "text": "機械学習",
             "correct": false,
             "speaker": "saru",
-            "feedback": "第3次ブームの主役。順番でいうと最後だね。"
+            "feedback": "第3次ブームの主役。順番でいうと最後だね。",
+            "ref": {
+              "title": "機械学習という言葉が生まれた年の話",
+              "url": "https://note.com/nakano683/n/neeafbb617dec?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
           },
           {
             "id": "d",
             "text": "ディープラーニング",
             "correct": false,
             "speaker": "toranii",
-            "feedback": "60年前にディープラーニングて。気が早すぎるわ。"
+            "feedback": "60年前にディープラーニングて。気が早すぎるわ。",
+            "ref": {
+              "title": "60年前のAIが実際に何をしていたか",
+              "url": "https://note.com/nakano683/n/ndefe674265eb",
+              "paid": false
+            }
           }
         ]
       },
@@ -465,7 +475,7 @@ const BUILTIN = [
             "text": "知識をルールとして人間が入力する作業が膨大すぎたから",
             "correct": false,
             "speaker": "saru",
-            "feedback": "それは第2次ブームの終わり方（知識獲得のボトルネック）だね。ブームを1つ間違えてるよ。ここは本番でもよく狙われるところ。",
+            "feedback": "それは第2次ブームの終わり方だね。ブームを1つ間違えてるよ。ここは本番でもよく狙われるところ。",
             "ref": {
               "title": "ブームと冬が繰り返される理由",
               "url": "https://note.com/nakano683/n/n89807bcd4307?magazine_key=m175af86cbfbb",
@@ -926,7 +936,12 @@ const BUILTIN = [
             "text": "山登り法",
             "speaker": "saru",
             "feedback": "今より良くなる方向にだけ進む方法だね。途中の小さな丘で止まってしまうことがある。これも探索だけど別物だよ。",
-            "correct": false
+            "correct": false,
+            "ref": {
+              "title": "良さそうな方向にだけ進む探索の話",
+              "url": "https://note.com/nakano683/n/ncac0cd47d759",
+              "paid": false
+            }
           },
           {
             "id": "d",
@@ -1064,6 +1079,884 @@ const BUILTIN = [
             "speaker": "toranii",
             "feedback": "それは学習のさせ方の区別や。心の話とちゃう。",
             "correct": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "schemaVersion": 1,
+    "pack": {
+      "id": "hist-02",
+      "title": "AIの歴史② 第2次AIブーム",
+      "description": "エキスパートシステムと第五世代コンピュータ。知識をぜんぶ書き出そうとした10年と、その限界。全20問。",
+      "free": true,
+      "order": 2,
+      "builtin": true
+    },
+    "questions": [
+      {
+        "id": "q001",
+        "text": "1960年代にスタンフォード大学で開発された、有機化合物の構造を推定する、世界初のエキスパートシステムとされるプログラムは？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "エキスパートシステム"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "DENDRAL（デンドラル）",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！質量分析のデータから分子の構造を言い当てるプログラム。専門家の頭の中をルールにして詰め込んだ、最初の例なんよ。",
+            "ref": {
+              "title": "エキスパートシステムがどう生まれたのか",
+              "url": "https://note.com/nakano683/n/n54441e4df805?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "PROSPECTOR（プロスペクター）",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "こっちも実在するエキスパートシステムだね。鉱床を探すのに使われた1970年代後半のもので、分野も時期も少しあとだよ。"
+          },
+          {
+            "id": "c",
+            "text": "SHRDLU（シュルドゥル）",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "積み木の世界で命令を理解するプログラムだね。ほぼ同じ時期だけど、化学の話じゃないよ。"
+          },
+          {
+            "id": "d",
+            "text": "HAL9000",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "映画の中のコンピュータや。実在せえへん。"
+          }
+        ]
+      },
+      {
+        "id": "q002",
+        "text": "1970年代にスタンフォード大学で開発された、血液感染症の診断と抗生物質の処方を支援したエキスパートシステムは？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "エキスパートシステム"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "MYCIN（マイシン）",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！約500のルールで診断する。専門医には及ばへんかったけど、専門外の医師よりは正確やったんよ。",
+            "ref": {
+              "title": "なぜ再びAIに巨額の金が動いたのか",
+              "url": "https://note.com/nakano683/n/n54441e4df805?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "XCON（エックスコン）",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "こちらも有名なエキスパートシステムだね。1980年、DEC社でコンピュータの構成を組み立てるのに使われた。医療じゃないよ。"
+          },
+          {
+            "id": "c",
+            "text": "AlphaFold（アルファフォールド）",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "タンパク質の立体構造を予測するAIだね。2020年、50年ちかくあとの話だよ。"
+          },
+          {
+            "id": "d",
+            "text": "Deep Blue（ディープ・ブルー）",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "チェスの機械や。人の体は診てくれへん。"
+          }
+        ]
+      },
+      {
+        "id": "q003",
+        "text": "エキスパートシステムの研究を主導し、「知識工学」を提唱した人物は？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "人物"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "エドワード・ファイゲンバウム",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！医療や化学で、専門家の知識をプログラムに詰め込む道を切り開いた人。「力は知識に宿る」と言い切って、AIの向きを変えたんよ。"
+          },
+          {
+            "id": "b",
+            "text": "アレン・ニューウェル",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "ハーバート・サイモンと組んで、ひとつ前の時代を代表するプログラムを作った人だね。時代が10年ほど早いよ。"
+          },
+          {
+            "id": "c",
+            "text": "テリー・ウィノグラード",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "積み木の世界のプログラムを作った人だね。同じ時代にいるけど、知識工学の旗振り役ではないよ。"
+          },
+          {
+            "id": "d",
+            "text": "ジョン・フォン・ノイマン",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "コンピュータの土台を作った人や。1957年に亡くなってる。この時代にはもうおらへん。"
+          }
+        ]
+      },
+      {
+        "id": "q004",
+        "text": "エキスパートシステムを構成する2つの要素の組み合わせとして正しいものは？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "エキスパートシステム"
+        ],
+        "note": "知識ベース＝知識を貯める場所。推論エンジン＝それを使って結論を出す仕組み。この2つを分けたことが発明だった。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "知識ベースと推論エンジン",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！知識を貯める場所と、それを使って結論を出す仕組み。分けたおかげで、知識だけ差し替えられるようになったんよ。",
+            "ref": {
+              "title": "エキスパートシステムの成り立ちがわかるよ",
+              "url": "https://note.com/nakano683/n/n54441e4df805?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "学習データとニューラルネットワーク",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "それは第3次ブームの機械学習の組み合わせだね。20年あとだよ。",
+            "ref": {
+              "title": "どのブームで何が主役だったのか",
+              "url": "https://note.com/nakano683/n/n89807bcd4307?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "c",
+            "text": "探索木と評価関数",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "ゲームAIで使う組み合わせだね。ひとつ前の時代の道具だよ。",
+            "ref": {
+              "title": "探索木と評価関数で戦うゲームAIの話",
+              "url": "https://note.com/nakano683/n/n4b604e812531?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "d",
+            "text": "コンパイラとインタプリタ",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "それはプログラムを動かす仕組みや。中身の話とちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q005",
+        "text": "エキスパートシステムを作るため、専門家から知識を聞き出してルールの形に直す役割の人を何と呼ぶ？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "職種"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ナレッジエンジニア（知識エンジニア）",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！専門家とプログラムの間に立つ通訳みたいな仕事。そしてここが、いちばんの難所やったんよ。"
+          },
+          {
+            "id": "b",
+            "text": "データサイエンティスト",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "データから傾向を見つける仕事だね。実在するけど、第3次ブーム以降に生まれた職種だよ。"
+          },
+          {
+            "id": "c",
+            "text": "システムアーキテクト",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "システム全体の設計をする人だね。実在する職種だけど、知識の聞き取りが役目ではないよ。"
+          },
+          {
+            "id": "d",
+            "text": "プロンプトエンジニア",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "生成AIに指示を出す仕事や。40年ほど先の職種やで。"
+          }
+        ]
+      },
+      {
+        "id": "q006",
+        "text": "エキスパートシステムで、知識を「もし〜ならば〜する」という形で書き表したものを何という？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "知識表現"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "プロダクションルール",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！if-thenの形やね。人間の判断を全部この形に書き直せる、と思ったのが第2次ブームなんよ。"
+          },
+          {
+            "id": "b",
+            "text": "決定木",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "条件で枝分かれさせる図だね。形は似てるけど、こっちはデータから機械が作るものだよ。"
+          },
+          {
+            "id": "c",
+            "text": "状態遷移図",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "状態の移り変わりを表すモデルだね。実在するけど、知識をためる形式ではないよ。"
+          },
+          {
+            "id": "d",
+            "text": "フローチャート",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "処理の流れを描いた図や。知識の書き方とはちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q007",
+        "text": "1982年から日本の通商産業省が約570億円を投じた、推論を高速に行うコンピュータを目指した国家プロジェクトは？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "日本"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "第五世代コンピュータ",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！1982年から10年、日本が国費を突っ込んだ計画。目標には届かへんかったけど、たくさんの演算装置で同時に計算する技術は今に残ってるんよ。",
+            "ref": {
+              "title": "日本が国費を投じた時代の話",
+              "url": "https://note.com/nakano683/n/n54441e4df805?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "TRONプロジェクト",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "坂村健さんが始めた国産OSの計画だね。ほぼ同じ時期の日本の話だけど、狙っていたものが違うよ。"
+          },
+          {
+            "id": "c",
+            "text": "ムーンショット型研究開発制度",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "日本の研究支援のしくみだね。2020年からのもので、40年あとだよ。"
+          },
+          {
+            "id": "d",
+            "text": "マンハッタン計画",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "原爆を作った計画や。国も年代もまるごとちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q008",
+        "text": "1982年に始まった日本の国家プロジェクトで中心に据えられた、論理をそのまま書き下すプログラミング言語は？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "言語"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "Prolog（プロログ）",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！「事実」と「規則」を書いておくと、あとは勝手に推論してくれる言語。手順を書かへんのが特徴なんよ。",
+            "ref": {
+              "title": "第五世代コンピュータで何を目指したのか",
+              "url": "https://note.com/nakano683/n/n54441e4df805?magazine_key=m010c073c9f4d",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "LISP（リスプ）",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "AI研究で長く使われた言語だね。かなり惜しいけど、こちらはアメリカ生まれ。この計画が選んだのは別のほうだよ。"
+          },
+          {
+            "id": "c",
+            "text": "FORTRAN（フォートラン）",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "科学技術計算で使われた古い言語だね。論理を書くための言語ではないよ。"
+          },
+          {
+            "id": "d",
+            "text": "Python（パイソン）",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "今のAIで使う言語やけど、生まれたんは1991年や。10年遅れて登場しとる。"
+          }
+        ]
+      },
+      {
+        "id": "q009",
+        "text": "1984年に始まった、人間が持つ一般常識をすべて書き出してコンピュータに入力しようとしたプロジェクトは？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "知識表現"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "Cyc（サイク）",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！「水は濡れている」「人は死んだら生き返らへん」みたいなことを、ひたすら書き続けた計画。しかも今も続いてるんよ。"
+          },
+          {
+            "id": "b",
+            "text": "WordNet（ワードネット）",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "英語の単語の意味を網の形にした辞書だね。1985年、時期も発想も近いけど、常識のすべてを狙ったものではないよ。"
+          },
+          {
+            "id": "c",
+            "text": "ImageNet（イメージネット）",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "画像に名前を付けた巨大なデータセットだね。2009年、25年あとの話だよ。"
+          },
+          {
+            "id": "d",
+            "text": "Wikipedia",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "みんなで書く百科事典や。2001年やし、そもそも人間が読むもんや。"
+          }
+        ]
+      },
+      {
+        "id": "q010",
+        "text": "一般常識をすべて書き出そうとしたプロジェクトを1984年に立ち上げ、その後40年近く続けた人物は？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "人物"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ダグラス・レナート",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！「常識がないから使えへんのや」と考えて、書き続けた人。2023年に亡くなるまで手を止めへんかったよ。"
+          },
+          {
+            "id": "b",
+            "text": "ティム・バーナーズ＝リー",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "Webを発明した人だね。知識に意味を持たせる構想には関わるけど、この計画の人ではないよ。"
+          },
+          {
+            "id": "c",
+            "text": "レイ・カーツワイル",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "シンギュラリティを唱えた人だね。未来予測のほうで有名だよ。"
+          },
+          {
+            "id": "d",
+            "text": "スティーブ・ジョブズ",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "パソコンの人や。常識を書き出す地道な作業はしてへん。"
+          }
+        ]
+      },
+      {
+        "id": "q011",
+        "text": "概念をノード（点）で、概念どうしの関係を矢印で表す知識表現の方法は？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "知識表現"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "意味ネットワーク",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！「犬」と「動物」を線でつなぐ、あの図やね。人の頭の中をまねようとした形なんよ。",
+            "ref": {
+              "title": "概念と概念の関係を人が書き込むという発想",
+              "url": "https://note.com/nakano683/n/n19396bed9a9d?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "ニューラルネットワーク",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "こちらも網の形だけど、数値を流して学習させるものだね。名前は似てるけど中身が違うよ。"
+          },
+          {
+            "id": "c",
+            "text": "ベイジアンネットワーク",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "確率で因果を表すモデルだね。実在するけど、概念の関係を書き表すものではないよ。"
+          },
+          {
+            "id": "d",
+            "text": "ソーシャルネットワーク",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "人と人のつながりや。知識表現の話とちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q012",
+        "text": "概念どうしの関係を図にした知識表現で、「犬は動物である」のような上位・下位の関係を表すリンクを何という？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "知識表現"
+        ],
+        "note": "is-a＝「AはBの一種」で性質を受け継ぐ。part-of＝「AはBの一部」。この2つはセットで問われる。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "is-a関係",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！「AはBの一種」という関係。上のものが持つ性質を、下がそのまま受け継ぐんよ。",
+            "ref": {
+              "title": "「犬は動物である」を人が書いていた時代",
+              "url": "https://note.com/nakano683/n/n19396bed9a9d?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "part-of関係",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "「AはBの一部」を表すリンクだね。実在するけど、こっちは「タイヤは車の一部」みたいな関係だよ。"
+          },
+          {
+            "id": "c",
+            "text": "has-a関係",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "「持っている」という関係を表す言い方だね。これも使うけど、上下の関係ではないよ。"
+          },
+          {
+            "id": "d",
+            "text": "if-then関係",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "それはルールの書き方や。知識のつなぎ方とはちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q013",
+        "text": "マービン・ミンスキーが提唱した、ものごとを「枠」と「そこに入る項目」の組で表す知識表現は？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "知識表現"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "フレーム",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！「部屋」という枠に「壁」「床」「天井」の欄をあらかじめ用意しておく形やね。名前がややこしいけど、あの有名な難問とは別ものやで。"
+          },
+          {
+            "id": "b",
+            "text": "スキーマ",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "心理学で使われる、とてもよく似た考え方の言葉だね。近いけど、この分野での呼び名は別だよ。"
+          },
+          {
+            "id": "c",
+            "text": "オブジェクト",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "プログラミングの考え方だね。実はこの知識表現から影響を受けているけど、提唱した人が違うよ。"
+          },
+          {
+            "id": "d",
+            "text": "テンプレート",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "型紙のことや。ざっくりしすぎやな。"
+          }
+        ]
+      },
+      {
+        "id": "q014",
+        "text": "オントロジーのうち、人間が時間をかけて厳密に概念を定義していく方式を何という？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "オントロジー"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ヘビーウェイトオントロジー",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！正確さを取りにいく代わりに、作るのがめちゃくちゃ重い。人手で一つずつ定義していくやり方やね。",
+            "ref": {
+              "title": "人が意味を全部定義していた時代の話",
+              "url": "https://note.com/nakano683/n/n19396bed9a9d?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "ライトウェイトオントロジー",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "対になる言い方で、こちらはWebのデータから自動で組み立てる方式だね。厳密さより実用を取るほうだよ。"
+          },
+          {
+            "id": "c",
+            "text": "フォークソノミー",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "利用者が自由にタグを付けて分類していく方式だね。実在するけど、厳密に定義する話とは逆向きだよ。"
+          },
+          {
+            "id": "d",
+            "text": "パブリックオントロジー",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "そんな分類はあらへん。それっぽい言葉に引っかかったな。"
+          }
+        ]
+      },
+      {
+        "id": "q015",
+        "text": "Webの情報に意味の情報を付け足して、コンピュータが内容を扱えるようにしようとした構想は？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "オントロジー"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "セマンティックウェブ",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！Webを作った人が1998年ごろに言い出した構想。知識表現の考え方が、インターネットに引っ越したんよ。",
+            "ref": {
+              "title": "Googleの知識グラフにつながる話",
+              "url": "https://note.com/nakano683/n/n19396bed9a9d?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "Web2.0",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "利用者が発信する側に回った時代を指す言葉だね。同じころの流行語だけど、別の話だよ。"
+          },
+          {
+            "id": "c",
+            "text": "ディープウェブ",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "検索に出てこないWebの領域のことだね。実在するけど、意味を付ける話ではないよ。"
+          },
+          {
+            "id": "d",
+            "text": "ダークウェブ",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "特殊なソフトでしか入られへん領域や。物騒なほうと混ぜたらあかん。"
+          }
+        ]
+      },
+      {
+        "id": "q016",
+        "text": "専門家の知識をルールに書き出す作業が膨大すぎて、エキスパートシステムが行き詰まった。この問題を何という？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "限界"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "知識獲得のボトルネック",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！知識が無いんやなくて、取り出せへんかった。ここが第2次ブームの終わりの入口なんよ。",
+            "ref": {
+              "title": "ブームと冬が繰り返される理由",
+              "url": "https://note.com/nakano683/n/n89807bcd4307?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "組合せ爆発",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "選択肢が増えすぎて計算が終わらなくなることだね。これも壁のひとつだけど、別のものだよ。",
+            "ref": {
+              "title": "組み合わせ爆発を階段の例で説明してるよ",
+              "url": "https://note.com/nakano683/n/n89807bcd4307?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "c",
+            "text": "コールドスタート問題",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "推薦システムで、データが無い初期に困る問題だね。実在するけど時代も分野も違うよ。"
+          },
+          {
+            "id": "d",
+            "text": "過学習",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "機械学習で、覚えすぎて応用が効かへんやつや。まだその時代とちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q017",
+        "text": "熟練者が持っている「経験でわかるが、言葉にできない知識」を何という？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "限界"
+        ],
+        "note": "暗黙知⇔形式知。言葉にできないほうが暗黙知。ルール化を阻んだ正体がこれ。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "暗黙知",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！「なんとなくこの患者は危ない」みたいな勘やね。これをルールに直せへんかったのが、いちばんの壁やったんよ。"
+          },
+          {
+            "id": "b",
+            "text": "形式知",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "ちょうど逆で、言葉や図で表せる知識のほうだね。2つセットで覚える言葉だよ。"
+          },
+          {
+            "id": "c",
+            "text": "集合知",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "大勢の意見を集めると賢くなる、という考え方だね。実在するけど別の話だよ。"
+          },
+          {
+            "id": "d",
+            "text": "潜在知",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "そんな用語はあらへん。それっぽいだけや。"
+          }
+        ]
+      },
+      {
+        "id": "q018",
+        "text": "エキスパートシステムが、限られた分野では強いのに現実で使えなかった最大の理由は？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "限界"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "人間なら誰でも持っている一般常識を、持っていなかったから",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！病気の診断はできても「男性は妊娠せえへん」が分からへん。だから常識を全部書き出そう、という無茶な計画まで始まったんよ。",
+            "ref": {
+              "title": "階段を降りるだけで無限の条件が要る、という話",
+              "url": "https://note.com/nakano683/n/n89807bcd4307?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "計算速度が足りなかったから",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "遅かったのは事実だね。でも速くしても解けない種類の問題だったんだ。"
+          },
+          {
+            "id": "c",
+            "text": "学習させるデータが集まらなかったから",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "データ不足の話は第3次ブームの文脈だね。この時代は、そもそもデータで学習していないよ。",
+            "ref": {
+              "title": "どのブームで何が壁になったのか",
+              "url": "https://note.com/nakano683/n/n89807bcd4307?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "d",
+            "text": "インターネットがなかったから",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "あったところであかんかったやろな。中身のほうの問題や。"
+          }
+        ]
+      },
+      {
+        "id": "q019",
+        "text": "ルールを増やし続けたエキスパートシステムが、やがて手に負えなくなった理由は？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "限界"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ルールが増えるほど、矛盾や例外が膨れ上がったから",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！千を超えると、どのルールがどこに効くか誰も分からへんようになる。足すほど壊れるんよ。",
+            "ref": {
+              "title": "ブームがどう終わっていったのか",
+              "url": "https://note.com/nakano683/n/n89807bcd4307?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "ルールを書ける技術者がいなくなったから",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "人手不足も確かにあったけど、根本の原因は仕組みのほうにあるんだ。"
+          },
+          {
+            "id": "c",
+            "text": "ルールを保存する容量が足りなかったから",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "中身は文字やで。容量くらいなんとかなるわ。"
+          },
+          {
+            "id": "d",
+            "text": "利用者が勝手にルールを書き換えたから",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "そんな運用してへん。触れたんは専門家だけや。"
+          }
+        ]
+      },
+      {
+        "id": "q020",
+        "text": "1970年代の医療用エキスパートシステムは専門医に迫る精度を出したのに、現場では使われなかった。その理由として指摘されているものは？",
+        "tags": [
+          "歴史",
+          "第2次ブーム",
+          "限界",
+          "倫理"
+        ],
+        "note": "「精度が足りない」ではなく「責任を負えない」。この論点は自動運転や生成AIでそのまま再燃する。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "診断を誤ったときの責任を、誰が負うのかが決まらなかったから",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！精度の問題やなかったんよ。40年前のこの話、今の自動運転や生成AIでもそのまま出てくるやろ。"
+          },
+          {
+            "id": "b",
+            "text": "医師が操作を覚えられなかったから",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "使いにくさも指摘されたけど、決定的だったのはもっと手前の問題だよ。"
+          },
+          {
+            "id": "c",
+            "text": "患者の個人情報を守れなかったから",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "今なら大問題だね。ただ、当時いちばん引っかかったのは別のところだよ。"
+          },
+          {
+            "id": "d",
+            "text": "診断結果を出すのに数日かかったから",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "そこまで遅ないわ。当時のマシンでもちゃんと動いとる。"
           }
         ]
       }
