@@ -1330,14 +1330,24 @@ const BUILTIN = [
             "text": "プロダクションルール",
             "correct": true,
             "speaker": "torakun",
-            "feedback": "正解！if-thenの形やね。人間の判断を全部この形に書き直せる、と思ったのが第2次ブームなんよ。"
+            "feedback": "正解！if-thenの形やね。人間の判断を全部この形に書き直せる、と思ったのが第2次ブームなんよ。",
+            "ref": {
+              "title": "500のIF-THENルールを人が手で書いた話",
+              "url": "https://note.com/nakano683/n/n7d12cb56d546?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
           },
           {
             "id": "b",
             "text": "決定木",
             "correct": false,
             "speaker": "saru",
-            "feedback": "条件で枝分かれさせる図だね。形は似てるけど、こっちはデータから機械が作るものだよ。"
+            "feedback": "条件で枝分かれさせる図だね。形は似てるけど、こっちはデータから機械が作るものだよ。",
+            "ref": {
+              "title": "IF文の中身を書くのは、人間かデータか",
+              "url": "https://note.com/nakano683/n/n7d12cb56d546?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
           },
           {
             "id": "c",
@@ -1957,6 +1967,878 @@ const BUILTIN = [
             "correct": false,
             "speaker": "toranii",
             "feedback": "そこまで遅ないわ。当時のマシンでもちゃんと動いとる。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "schemaVersion": 1,
+    "pack": {
+      "id": "ml-01",
+      "title": "機械学習の手法① 教師あり学習",
+      "description": "回帰と分類、SVM、決定木、アンサンブル。名前は似ているのに中身が違う手法を、間違え方から潰す。全20問。",
+      "free": true,
+      "order": 3,
+      "builtin": true
+    },
+    "questions": [
+      {
+        "id": "q001",
+        "text": "教師あり学習と教師なし学習を分けているものは？",
+        "tags": [
+          "機械学習",
+          "教師あり学習"
+        ],
+        "note": "教師＝正解ラベル。ラベルがあれば教師あり、なければ教師なし。データ量でも手法でもない。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "学習データに正解ラベルが付いているかどうか",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！「教師」＝正解ラベルのことやね。答えを見せながら教えるか、答えなしで放り込むか。それだけの違いなんよ。",
+            "ref": {
+              "title": "正解が無いのに、どう学ぶのか",
+              "url": "https://note.com/nakano683/n/n6964ef29680b?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "学習データの量が多いか少ないか",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "量は精度に効くけど、種類を分ける基準ではないよ。少なくても教師ありは教師ありだね。"
+          },
+          {
+            "id": "c",
+            "text": "人間が学習の途中で口を出すかどうか",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "そう読みたくなる名前だけど違うんだ。人が見張るという意味ではないよ。"
+          },
+          {
+            "id": "d",
+            "text": "ニューラルネットワークを使うかどうか",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "手法の話とちゃう。どっちの学習でもニューラルネットは使えるで。"
+          }
+        ]
+      },
+      {
+        "id": "q002",
+        "text": "家の広さから価格を予測するように、連続した数値を当てにいく問題を何という？",
+        "tags": [
+          "機械学習",
+          "教師あり学習"
+        ],
+        "note": "対象ではなく聞き方で決まる。株価でも「いくらか」なら回帰、「上がるか下がるか」なら分類。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "回帰",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！値段、気温、株価みたいに、途中の数字がありうるものやね。「いくら？」と聞かれたらこっちや。",
+            "ref": {
+              "title": "機械学習はどこから始まったのか",
+              "url": "https://note.com/nakano683/n/neeafbb617dec?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "分類",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "対になる言葉だね。こっちは「迷惑メールかどうか」みたいに、決まった箱に振り分けるほうだよ。"
+          },
+          {
+            "id": "c",
+            "text": "クラスタリング",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "似たものを勝手にグループ分けする手法だね。正解ラベルを使わないので、そもそも教師なしのほうだよ。",
+            "ref": {
+              "title": "クラスタリングは何をしているのか",
+              "url": "https://note.com/nakano683/n/n6964ef29680b?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "d",
+            "text": "次元削減",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "項目の数を減らす処理や。予測そのものとちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q003",
+        "text": "名前に「回帰」と付いているのに、実際には分類に使われる手法は？",
+        "tags": [
+          "機械学習",
+          "教師あり学習"
+        ],
+        "note": "名前に騙されないこと。回帰と付くが、出力は確率で、しきい値を切って分類する。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "ロジスティック回帰",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！ここ、名前で引っかける問題がよう出るんよ。出てくるのは0〜1の確率で、それを0.5で切って振り分けるんや。"
+          },
+          {
+            "id": "b",
+            "text": "線形回帰",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "こっちは名前のとおり回帰だね。直線を引いて連続値を予測する、いちばん素直なほうだよ。"
+          },
+          {
+            "id": "c",
+            "text": "リッジ回帰",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "実在する手法だね。重みが大きくなりすぎないように抑えたもので、こちらも回帰だよ。"
+          },
+          {
+            "id": "d",
+            "text": "自己回帰",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "過去の自分の値から先を読む、時系列のほうの話や。分類はせえへん。"
+          }
+        ]
+      },
+      {
+        "id": "q004",
+        "text": "出力を0から1のあいだに押し込んで、確率として扱えるようにする関数は？",
+        "tags": [
+          "機械学習",
+          "教師あり学習"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "シグモイド関数",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！Sの字にぐにゃっと曲がったやつやね。どんな数を入れても、必ず0と1のあいだに収まるんよ。"
+          },
+          {
+            "id": "b",
+            "text": "ソフトマックス関数",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "とても近い働きだね。ただしこちらは3つ以上の選択肢に配って、全部足すと1になるほうだよ。かなり惜しい。"
+          },
+          {
+            "id": "c",
+            "text": "ReLU関数",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "0より下を切り捨てる関数だね。上には限りがないので、確率としては使えないよ。"
+          },
+          {
+            "id": "d",
+            "text": "恒等関数",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "入れたものをそのまま返すだけや。何も押し込んでへん。"
+          }
+        ]
+      },
+      {
+        "id": "q005",
+        "text": "3つ以上のクラスに分類するとき、合計すると1になる確率を出す関数は？",
+        "tags": [
+          "機械学習",
+          "教師あり学習"
+        ],
+        "note": "2択＝シグモイド、3択以上＝ソフトマックス。出力層で必ず問われる対。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "ソフトマックス関数",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！「犬70%・猫20%・鳥10%」みたいに配ってくれるやつやね。足したらぴったり100%になるんよ。"
+          },
+          {
+            "id": "b",
+            "text": "シグモイド関数",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "2つに分けるときの相棒だね。3つ以上を扱うと合計が1にならないので、そこで使い分けるんだ。"
+          },
+          {
+            "id": "c",
+            "text": "tanh関数",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "−1から1に収める関数だね。マイナスが出るので確率にはできないよ。"
+          },
+          {
+            "id": "d",
+            "text": "ステップ関数",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "0か1かをパチンと切り替えるだけや。途中の割合が出てこうへん。"
+          }
+        ]
+      },
+      {
+        "id": "q006",
+        "text": "サポートベクターマシンが境界線を決めるときの基準は？",
+        "tags": [
+          "機械学習",
+          "SVM"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "境界と、いちばん近いデータとの距離を最大にする",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！これをマージン最大化っていうんよ。両側にいちばん広い余白ができる場所に線を引くわけや。",
+            "ref": {
+              "title": "マージンで腹落ちさせるSVM",
+              "url": "https://note.com/nakano683/n/nce55887f8f33?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "誤分類したデータの数だけを最小にする",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "それだけだと、ぎりぎりを通る危なっかしい線でも合格になってしまうんだ。余白を見るのがこの手法の肝だよ。"
+          },
+          {
+            "id": "c",
+            "text": "すべてのデータからの距離の合計を最小にする",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "全体を見にいく発想だね。でもこの手法が見ているのは、境界のすぐそばにいる少数のデータだけだよ。"
+          },
+          {
+            "id": "d",
+            "text": "データの平均値を通るように引く",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "そんな雑な引き方はせえへん。平均は境界の目印にならんのや。"
+          }
+        ]
+      },
+      {
+        "id": "q007",
+        "text": "サポートベクターマシンで、境界のすぐ近くにあって境界の位置を決めているデータを何という？",
+        "tags": [
+          "機械学習",
+          "SVM"
+        ],
+        "note": "境界を決めているのは、ごく一部のデータだけ。遠いデータをいくら足しても境界は動かない。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "サポートベクトル",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！手法の名前そのものやね。この数個だけが境界を支えとって、遠くのデータは何個あっても効かへんのよ。",
+            "ref": {
+              "title": "境界を支えているのは誰か",
+              "url": "https://note.com/nakano683/n/nce55887f8f33?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "外れ値",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "ぽつんと離れたデータのことだね。実在する用語だけど、境界を支える役ではないよ。"
+          },
+          {
+            "id": "c",
+            "text": "重心",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "グループの真ん中を表す点だね。こちらはクラスタリングでよく出てくるよ。"
+          },
+          {
+            "id": "d",
+            "text": "バイアス",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "偏りやズレを指す言葉や。特定のデータのことやない。"
+          }
+        ]
+      },
+      {
+        "id": "q008",
+        "text": "直線では分けられないデータを、計算量を抑えたまま高次元で分けられるようにする工夫は？",
+        "tags": [
+          "機械学習",
+          "SVM"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "カーネルトリック",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！わざわざ高い次元へ移さずに、移したことにして計算する裏ワザやね。だから「トリック」って呼ばれるんよ。",
+            "ref": {
+              "title": "カーネルで何が起きているのか",
+              "url": "https://note.com/nakano683/n/nce55887f8f33?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "ドロップアウト",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "学習中にわざと一部を休ませる工夫だね。実在するけど、こちらはニューラルネットで使うものだよ。"
+          },
+          {
+            "id": "c",
+            "text": "スラック変数",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "同じ手法の中に出てくる言葉だね。ただしこっちは、多少のはみ出しを許すための仕組みだよ。"
+          },
+          {
+            "id": "d",
+            "text": "ワンホットエンコーディング",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "カテゴリを0と1の並びに直す前処理や。分ける工夫とちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q009",
+        "text": "決定木がデータを枝分かれさせるとき、下げようとしている指標は？",
+        "tags": [
+          "機械学習",
+          "決定木"
+        ],
+        "note": "不純度が下がる＝分けた後のグループが揃う。ジニ係数もエントロピーも、不純度のはかり方の違い。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "不純度",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！分けたあとのグループが「揃っている」ほど良い、という考え方やね。はかり方にジニ係数とエントロピーがあるんよ。",
+            "ref": {
+              "title": "「どれだけスッパリ分かれたか」を測る物差しの話",
+              "url": "https://note.com/nakano683/n/n7d12cb56d546?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "学習率",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "一度にどれだけ重みを動かすかを決める値だね。実在するけど、こちらは勾配を使う手法の話だよ。"
+          },
+          {
+            "id": "c",
+            "text": "マージン",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "境界からの余白のことだね。これは別の手法が最大化しようとするものだよ。"
+          },
+          {
+            "id": "d",
+            "text": "次元数",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "項目の数のことや。枝分かれのたびに減るもんとちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q010",
+        "text": "決定木が、他の多くの手法と違って前処理でほとんど気にしなくてよいことは？",
+        "tags": [
+          "機械学習",
+          "決定木"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "特徴量のスケールを揃えること",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！身長センチと年収円が混ざってても平気なんよ。「◯以上か未満か」しか見てへんから、単位の大小に振り回されへんのや。",
+            "ref": {
+              "title": "効く項目を作っとるのは人間やんけ",
+              "url": "https://note.com/nakano683/n/n3e414c8312fa?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "欠損値を埋めること",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "実装によっては扱えるけれど、基本的には対応が必要だね。ここは他の手法と同じだよ。"
+          },
+          {
+            "id": "c",
+            "text": "学習データを用意すること",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "それが要らんかったら教師あり学習とちゃうやろ。"
+          },
+          {
+            "id": "d",
+            "text": "分類する先のクラスを決めること",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "決めなあかんに決まっとる。何に分けるか無しには動かへん。"
+          }
+        ]
+      },
+      {
+        "id": "q011",
+        "text": "決定木が深くなりすぎて学習データに合わせすぎるのを防ぐため、枝を切る操作を何という？",
+        "tags": [
+          "機械学習",
+          "決定木"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "剪定（枝刈り）",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！植木と同じで、伸ばしっぱなしにせず切りそろえるんよ。深さの上限を決めるやり方もあるね。",
+            "ref": {
+              "title": "機械が木をどう育てて、どこで止めるのか",
+              "url": "https://note.com/nakano683/n/n7d12cb56d546?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "正則化",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "同じく複雑になりすぎるのを抑える考え方だね。ただし、こちらは重みの大きさに罰を与えるやり方だよ。"
+          },
+          {
+            "id": "c",
+            "text": "標準化",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "データの平均と散らばりを揃える前処理だね。木の形とは関係ないよ。"
+          },
+          {
+            "id": "d",
+            "text": "圧縮",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "ファイルを小さくする話や。木を切る話とちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q012",
+        "text": "元のデータから重複を許して何度も抜き出し、少しずつ違うデータセットを作る方法は？",
+        "tags": [
+          "機械学習",
+          "アンサンブル"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ブートストラップサンプリング",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！同じデータが2回入ってもええ、という抜き方やね。これで少しずつ違う訓練データを何組も作るんよ。",
+            "ref": {
+              "title": "第3章の手法を1本に整理する",
+              "url": "https://note.com/nakano683/n/n8c05c0ba2d1d?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "層化抽出",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "クラスの比率を保ったまま抜き出す方法だね。実在するけど、重複を許すのが目的ではないよ。"
+          },
+          {
+            "id": "c",
+            "text": "アンダーサンプリング",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "多いほうのクラスを減らして偏りを直す方法だね。こちらは不均衡データへの対処だよ。"
+          },
+          {
+            "id": "d",
+            "text": "シャッフル",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "順番を混ぜるだけや。データセットは増えへん。"
+          }
+        ]
+      },
+      {
+        "id": "q013",
+        "text": "少しずつ違うデータで複数のモデルを別々に学習させ、多数決や平均を取る方法は？",
+        "tags": [
+          "機械学習",
+          "アンサンブル"
+        ],
+        "note": "バギング＝並列に作って多数決。ブースティング＝順番に作って前の失敗を補う。ここは必ず対で問われる。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "バギング",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！みんな同時に学習して、あとで多数決やね。ばらつきを打ち消すのが狙いなんよ。",
+            "ref": {
+              "title": "複数のモデルをどうまとめるのか",
+              "url": "https://note.com/nakano683/n/nce55887f8f33?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "ブースティング",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "対になる方法だね。あちらは順番に作って、前のモデルが外したところを次が重点的に見るやり方だよ。"
+          },
+          {
+            "id": "c",
+            "text": "スタッキング",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "複数モデルの予測を、さらに別のモデルに学習させてまとめる方法だね。これも実在するけど別物だよ。"
+          },
+          {
+            "id": "d",
+            "text": "ファインチューニング",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "学習済みモデルを微調整する話や。組み合わせる話とちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q014",
+        "text": "前のモデルが間違えたデータを重く見ながら、モデルを順番に足していく方法は？",
+        "tags": [
+          "機械学習",
+          "アンサンブル"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ブースティング",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！前の失敗を次が拾う、リレー方式やね。順番にやるぶん時間はかかるけど、精度は上がりやすいんよ。",
+            "ref": {
+              "title": "順番に積み上げていくやり方の話",
+              "url": "https://note.com/nakano683/n/nce55887f8f33?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "バギング",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "対になる方法だね。あちらは全部同時に学習させて、あとで多数決を取るほうだよ。"
+          },
+          {
+            "id": "c",
+            "text": "転移学習",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "よその分野で学んだ成果を持ち込む方法だね。実在するけど、失敗を引き継ぐ話ではないよ。"
+          },
+          {
+            "id": "d",
+            "text": "クロスバリデーション",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "データを分けて評価するやり方や。モデルを足していく話とちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q015",
+        "text": "複数のモデルを組み合わせて、単体より良い結果を狙う考え方の総称は？",
+        "tags": [
+          "機械学習",
+          "アンサンブル"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "アンサンブル学習",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！合奏のアンサンブルと同じ言葉やね。ひとりでは外す音も、大勢でやれば目立たへんという発想なんよ。",
+            "ref": {
+              "title": "10個以上の手法が同じ土俵にいる話",
+              "url": "https://note.com/nakano683/n/n8c05c0ba2d1d?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "強化学習",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "報酬をもらいながら試行錯誤する学習だね。まったく別の枠組みだよ。"
+          },
+          {
+            "id": "c",
+            "text": "半教師あり学習",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "ラベルの付いたデータと付いていないデータを混ぜて使う方法だね。実在するけど、組み合わせるのはモデルではなくデータだよ。"
+          },
+          {
+            "id": "d",
+            "text": "多層学習",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "そんな呼び名の枠組みはあらへん。それっぽいだけや。"
+          }
+        ]
+      },
+      {
+        "id": "q016",
+        "text": "たくさんの決定木を作り、その多数決で予測する手法は？",
+        "tags": [
+          "機械学習",
+          "アンサンブル"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "ランダムフォレスト",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！木がたくさんで森、そのままの名前やね。1本ずつは弱くても、束になると強いんよ。",
+            "ref": {
+              "title": "森の作り方がわかるよ",
+              "url": "https://note.com/nakano683/n/n8c05c0ba2d1d?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "勾配ブースティング",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "こちらも木をたくさん使う手法だね。ただし多数決ではなく、別のまとめ方をするほうだよ。かなり惜しい。"
+          },
+          {
+            "id": "c",
+            "text": "k平均法",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "データをk個のグループに分ける手法だね。正解ラベルを使わないので、教師なしのほうだよ。"
+          },
+          {
+            "id": "d",
+            "text": "パーセプトロン",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "ニューラルネットのご先祖さんや。木は1本も出てこうへん。"
+          }
+        ]
+      },
+      {
+        "id": "q017",
+        "text": "たくさんの決定木の多数決で予測する手法が、単純に木を並べるだけでなく加えている工夫は？",
+        "tags": [
+          "機械学習",
+          "アンサンブル"
+        ],
+        "note": "データも特徴量も両方ランダムに選ぶ。だから木どうしが似すぎず、多数決が効く。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "1本ごとに、使う特徴量もランダムに選ぶ",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！データだけ変えても、木が似たり寄ったりになってまうんよ。見る項目も変えることで、はじめて多数決が効くんや。",
+            "ref": {
+              "title": "第3章まとめで全体を見る",
+              "url": "https://note.com/nakano683/n/n8c05c0ba2d1d?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "1本ごとに、木の深さを必ず1段ずつ増やす",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "そういう決まりはないんだ。深さは共通の条件で決めることが多いよ。"
+          },
+          {
+            "id": "c",
+            "text": "精度の低い木を、その都度捨てていく",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "弱い木も残したまま多数決に加えるのがこの手法だね。捨ててしまうと多様さが失われるんだ。"
+          },
+          {
+            "id": "d",
+            "text": "すべての木にまったく同じデータを与える",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "それやったら全部おんなじ木ができるやろ。多数決の意味があらへん。"
+          }
+        ]
+      },
+      {
+        "id": "q018",
+        "text": "誤って分類したデータの重みを大きくしながら、弱い学習器を順番に足していく代表的な手法は？",
+        "tags": [
+          "機械学習",
+          "アンサンブル"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "AdaBoost",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！外したデータほど「次はちゃんと見ろ」と重みを付けるやり方やね。ここから勾配ブースティングやXGBoostへ発展していくんよ。",
+            "ref": {
+              "title": "AdaBoostもここに出てくるよ",
+              "url": "https://note.com/nakano683/n/nce55887f8f33?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "AdaGrad",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "名前がよく似てるね。ただしこちらは、学習率を自動で調整する最適化の手法だよ。かなり紛らわしい。"
+          },
+          {
+            "id": "c",
+            "text": "AdaLine",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "1960年ごろの初期のニューラルネットのモデルだね。実在するけど、時代も分野も違うよ。"
+          },
+          {
+            "id": "d",
+            "text": "AdaSearch",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "そんな手法はあらへん。頭に「Ada」を付けただけや。"
+          }
+        ]
+      },
+      {
+        "id": "q019",
+        "text": "学習の段階ではほとんど何もせず、予測するときに近くのデータを見て多数決する手法は？",
+        "tags": [
+          "機械学習",
+          "教師あり学習"
+        ],
+        "choices": [
+          {
+            "id": "a",
+            "text": "k近傍法",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！ため込むだけためて、聞かれてから探しにいくやり方やね。学習が楽なぶん、予測のたびに計算がかかるんよ。"
+          },
+          {
+            "id": "b",
+            "text": "k平均法",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "名前が1文字違いだね。ただしあちらは正解ラベルを使わず、勝手にグループ分けする教師なしのほうだよ。ここは頻出の引っかけ。",
+            "ref": {
+              "title": "k平均法のほうは何をしているのか",
+              "url": "https://note.com/nakano683/n/n6964ef29680b?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "c",
+            "text": "線形判別分析",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "クラスを分ける直線を先に求めておく手法だね。実在するけど、こちらは学習の段階でちゃんと計算するよ。"
+          },
+          {
+            "id": "d",
+            "text": "最近傍探索木",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "探索を速くするためのデータ構造の話や。分類手法の名前とちゃう。"
+          }
+        ]
+      },
+      {
+        "id": "q020",
+        "text": "特徴量どうしが互いに影響しないと割り切ることで、計算を軽くしている分類手法は？",
+        "tags": [
+          "機械学習",
+          "教師あり学習"
+        ],
+        "note": "「独立と仮定する」＝実際は独立でないのに、そう決めつける。だから naive（素朴）と呼ばれる。",
+        "choices": [
+          {
+            "id": "a",
+            "text": "単純ベイズ（ナイーブベイズ）",
+            "correct": true,
+            "speaker": "torakun",
+            "feedback": "正解！ほんまは単語どうし関係あるのに、無いことにしてまう。その割り切りが「素朴」と呼ばれる由来やね。迷惑メール判定で有名なんよ。",
+            "ref": {
+              "title": "「かつ」の掛け算がどこから来たのか",
+              "url": "https://note.com/nakano683/n/n8241de9d3d55?magazine_key=m175af86cbfbb",
+              "paid": false
+            }
+          },
+          {
+            "id": "b",
+            "text": "ベイジアンネットワーク",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "同じ確率の考え方を使う手法だね。ただしこちらは、項目どうしのつながりをきちんと書き表すほうだよ。ちょうど逆の発想だね。"
+          },
+          {
+            "id": "c",
+            "text": "サポートベクターマシン",
+            "correct": false,
+            "speaker": "saru",
+            "feedback": "同じく分類に使う手法だね。ただし、項目どうしが独立だと割り切ることで知られる手法ではないよ。"
+          },
+          {
+            "id": "d",
+            "text": "単純パーセプトロン",
+            "correct": false,
+            "speaker": "toranii",
+            "feedback": "「単純」つながりで引っかかったな。あっちはニューラルネットの話や。"
           }
         ]
       }
